@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "nome": "marta",
+    "sobrenome": "maria",
+    "telefone": "88888888",
+    "ra": 423
+  },
+  {
+    "id": 2,
+    "nome": "julios",
+    "sobrenome": "teste",
+    "telefone": "99999999",
+    "ra": 2
+  },
+  {
+    "id": 3,
+    "nome": "mais",
+    "sobrenome": "agora",
+    "telefone": "5555555",
+    "ra": 3
+  },
+  {
+    "id": 4,
+    "nome": "nao",
+    "sobrenome": "will",
+    "telefone": "987654",
+    "ra": 4
+  },
+  {
+    "id": 5,
+    "nome": "marcos teste",
+    "sobrenome": "garas",
+    "telefone": "987654",
+    "ra": 5
+  }
+]
