@@ -19,15 +19,40 @@ function Cadastrar() {
 function carregarEstudantes() {
     tbory.innerHTML = '';
     var xhr = new XMLHttpRequest();
-    console.log('UNSENT');
+    console.log('UNSENT', xhr.readyState);
 
     xhr.open(`GET`, `http://localhost:50886/api/aluno/`, true);
+    console.log('OPENED', xhr.readyState);
 
-    xhr.onload = function () {
-        var estudantes = JSON.parse(this.responseText);
-        for (var indice in estudantes) {
-            adicionaLinha(estudantes[indice]);
+    xhr.onprogress = function () {
+        console.log('LOADING', xhr.readyState);
+    };
+
+    xhr.onerror = function () {
+        console.log('ERRO', xhr.readyState);
+    };
+
+
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                var estudantes = JSON.parse(this.responseText);
+                console.log('DONE', xhr.readyState);
+                for (var indice in estudantes) {
+                    adicionaLinha(estudantes[indice]);
+                }
+            }
+            else if(this.status == 500){
+                var error = JSON.parse(this.responseText);
+                console.log(error);
+                console.log(error.Message);
+                console.log(error.ExceptionMessage);
+            }
         }
+        else {
+            console.log('');
+        }
+
     }
     xhr.send();
 }
@@ -95,22 +120,22 @@ function excluir(estudante) {
             }
         },
         callback: function (result) {
-            if (result){
+            if (result) {
                 deletarEstudante(estudante.id);
                 carregarEstudantes();
             }
-           
+
         }
     });
-    
-    
-    
+
+
+
 
 }
 function Cancelar() {
     var btnSalvar = document.querySelector('#btnSalvar');
     var tituloModal = document.querySelector('#tituloModal');
-   
+
     document.querySelector('#nome').value = '';
     document.querySelector('#sobrenome').value = '';
     document.querySelector('#telefone').value = '';
@@ -121,10 +146,10 @@ function Cancelar() {
 
     $('#exampleModal').modal('hide');
 }
-function NovoAluno(){
+function NovoAluno() {
     var btnSalvar = document.querySelector('#btnSalvar');
     var tituloModal = document.querySelector('#tituloModal');
-   
+
     document.querySelector('#nome').value = '';
     document.querySelector('#sobrenome').value = '';
     document.querySelector('#telefone').value = '';
