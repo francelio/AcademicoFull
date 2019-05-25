@@ -19,6 +19,7 @@ function Cadastrar() {
 function carregarEstudantes() {
     tbory.innerHTML = '';
     var xhr = new XMLHttpRequest();
+    console.log('UNSENT');
 
     xhr.open(`GET`, `http://localhost:50886/api/aluno/`, true);
 
@@ -52,7 +53,7 @@ function adicionaLinha(estudante) {
                                 <td>${estudante.ra}</td>
                                     <td>
                                         <button class="btn btn-info"  data-toggle="modal" data-target="#exampleModal" onclick='editarEstudante(${JSON.stringify(estudante)})'> Editar</button>
-                                        <button  class="btn btn-danger"  onclick='excluir(${estudante.id})'> Deletar</button>
+                                        <button  class="btn btn-danger"  onclick='excluir(${JSON.stringify(estudante)})'> Deletar</button>
                                     </td>
                               </tr>
                              `;
@@ -80,11 +81,30 @@ function deletarEstudante(id) {
     xhr.send();
 
 }
-function excluir(id) {
-    if (confirm("Tem certeza que deseja excluir o estudante?")){
-        deletarEstudante(id);
-        carregarEstudantes();
-    }
+function excluir(estudante) {
+    bootbox.confirm({
+        message: `Tem certeza que deseja excluir excluir o estudante ${estudante.nome}`,
+        buttons: {
+            confirm: {
+                label: 'Sim',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Não',
+                className: 'btn-danger'
+            }
+        },
+        callback: function (result) {
+            if (result){
+                deletarEstudante(estudante.id);
+                carregarEstudantes();
+            }
+           
+        }
+    });
+    
+    
+    
 
 }
 function Cancelar() {
