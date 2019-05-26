@@ -50,7 +50,7 @@ namespace WebApplication1.Models
 			try
 			{
 				var alunoDB = new AlunoDAO();
-				alunoDB.InserirAunoBD(Aluno);
+				alunoDB.InserirAlunoBD(Aluno);
 
 			}
 			catch (Exception ex)
@@ -70,22 +70,36 @@ namespace WebApplication1.Models
 
 			//return Aluno;
 		}
-		public Aluno Atualizar(int id, Aluno Aluno) {
-			var listaAlunos = this.ListarAluno();
-			var itemIndex = listaAlunos.FindIndex(p => p.id == id);
-
-			if (itemIndex >= 0)
+		public void Atualizar(Aluno Aluno) {
+			try
 			{
-				Aluno.id = id;
-				listaAlunos[itemIndex] = Aluno;
+				var alunoDB = new AlunoDAO();
+				alunoDB.AtualizarAlunoBD(Aluno);
+
 			}
-			else {
-				return null;
+			catch (Exception ex)
+			{
+
+				throw new Exception($"error ao atualizar aluno:error=>{ex.Message} ");
 			}
 
-			ReescreverArquivo(listaAlunos);
 
-			return Aluno;
+
+			//var listaAlunos = this.ListarAluno();
+			//var itemIndex = listaAlunos.FindIndex(p => p.id == id);
+
+			//if (itemIndex >= 0)
+			//{
+			//	Aluno.id = id;
+			//	listaAlunos[itemIndex] = Aluno;
+			//}
+			//else {
+			//	return null;
+			//}
+
+			//ReescreverArquivo(listaAlunos);
+
+			//return Aluno;
 		}
 
 		public bool Deletar(int id)

@@ -45,7 +45,7 @@ namespace WebApplication1.Models
 			return listAlunos;
 		}
 
-		public void InserirAunoBD(Aluno aluno) {
+		public void InserirAlunoBD(Aluno aluno) {
 
 			IDbCommand insertCMD = conexao.CreateCommand();
 			insertCMD.CommandText = "insert into Alunos (nome, sobrenome, telefone, ra) values (@nome,@sobrenome,@telefone,@ra) ";
@@ -63,6 +63,27 @@ namespace WebApplication1.Models
 			insertCMD.Parameters.Add(parmRa);
 
 			insertCMD.ExecuteNonQuery();
+		}
+		public void AtualizarAlunoBD(Aluno aluno)
+		{
+
+			IDbCommand updateCMD = conexao.CreateCommand();
+			updateCMD.CommandText = "update Alunos set nome = @nome, sobrenome = @sobrenome, telefone = @telefone, ra = @ra where Id=@ID";
+
+			IDbDataParameter parmNome = new SqlParameter("nome", aluno.nome);
+			IDbDataParameter parmSobreNome = new SqlParameter("sobrenome", aluno.sobrenome);
+			IDbDataParameter parmTelefone = new SqlParameter("telefone", aluno.telefone);
+			IDbDataParameter parmRa = new SqlParameter("ra", aluno.ra);
+
+			updateCMD.Parameters.Add(parmNome);
+			updateCMD.Parameters.Add(parmSobreNome);
+			updateCMD.Parameters.Add(parmTelefone);
+			updateCMD.Parameters.Add(parmRa);
+
+			IDbDataParameter parmID = new SqlParameter("ID", aluno.id);
+			updateCMD.Parameters.Add(parmID);
+
+			updateCMD.ExecuteNonQuery();
 		}
 	}
 }

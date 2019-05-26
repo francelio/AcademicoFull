@@ -74,7 +74,9 @@ namespace WebApplication1.Controllers
 		public Aluno Put(int id, [FromBody]Aluno aluno)
 		{
 			Aluno _alunosIns = new Aluno();
-			return _alunosIns.Atualizar(id, aluno);
+			aluno.id = id;
+			_alunosIns.Atualizar(aluno);
+			return _alunosIns.ListarAluno().FirstOrDefault(x=>x.id==id);
 
 		}
 
