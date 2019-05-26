@@ -28,13 +28,33 @@ namespace WebApplication1.Models
 
 			return listAlunos;
 		}
-		public string stringConexao = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=~/App_Data/Database.mdf;Integrated Security = True";
-		public IDbConnection conexao;
+
 		public List<Aluno> ListarAlunosBD()
 		{
+			string stringConexao = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\01-estudos\AcademicoFull\Seção-5-ConexaoBancoDados\Backend\WebApplication1\App_Data\Database.mdf;Integrated Security=True";
+			IDbConnection conexao;
+
 			conexao = new SqlConnection(stringConexao);
+			conexao.Open();
 			var listAlunos = new List<Aluno>();
 
+			IDbCommand selectCMD = conexao.CreateCommand();
+			selectCMD.CommandText = "select * from Alunos";
+
+			IDataReader resultado = selectCMD.ExecuteReader();
+
+			while (resultado.Read()) {
+				var alu = new Aluno();
+				alu.id = Convert.ToInt32(resultado["Id"]);
+				alu.nome = Convert.ToString(resultado["nome"]);
+				alu.sobrenome = Convert.ToString(resultado["sobrenome"]);
+				alu.telefone = Convert.ToString(resultado["telefone"]);
+				alu.ra = Convert.ToInt32(resultado["ra"]);
+
+				listAlunos.Add(alu);
+
+			}
+			conexao.Close();
 			return listAlunos;
 		}
 		public bool ReescreverArquivo(List<Aluno> listaAlunos) {
