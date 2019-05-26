@@ -22,44 +22,20 @@ namespace WebApplication1.Models
 
 		public List<Aluno> ListarAluno() {
 
-			var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data\base.json");
-			var json = File.ReadAllText(caminhoArquivo);
-
-			var listAlunos = JsonConvert.DeserializeObject<List<Aluno>>(json);
-
-			return listAlunos;
-		}
-
-		public List<Aluno> ListarAlunosBD()
-		{
-			//string stringConexao = ConfigurationManager.AppSettings["ConnectionString"];
-			string stringConexao = ConfigurationManager.ConnectionStrings["ConexaoDev"].ConnectionString;
-
-			IDbConnection conexao;
-
-			conexao = new SqlConnection(stringConexao);
-			conexao.Open();
-			var listAlunos = new List<Aluno>();
-
-			IDbCommand selectCMD = conexao.CreateCommand();
-			selectCMD.CommandText = "select * from Alunos";
-
-			IDataReader resultado = selectCMD.ExecuteReader();
-
-			while (resultado.Read()) {
-				var alu = new Aluno();
-				alu.id = Convert.ToInt32(resultado["Id"]);
-				alu.nome = Convert.ToString(resultado["nome"]);
-				alu.sobrenome = Convert.ToString(resultado["sobrenome"]);
-				alu.telefone = Convert.ToString(resultado["telefone"]);
-				alu.ra = Convert.ToInt32(resultado["ra"]);
-
-				listAlunos.Add(alu);
+			try
+			{
+				var alunoDB = new AlunoDAO();
+				return alunoDB.ListarAlunosBD();
 
 			}
-			conexao.Close();
-			return listAlunos;
+			catch (Exception ex)
+			{
+
+				throw new Exception($"error ao listar alunos:error=>{ex.Message} ");
+			}
+			
 		}
+
 		public bool ReescreverArquivo(List<Aluno> listaAlunos) {
 
 			var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data\base.json");
@@ -69,16 +45,30 @@ namespace WebApplication1.Models
 
 			return true;
 		}
-		public Aluno Inserir(Aluno Aluno) {
-			var listaAlunos = this.ListarAluno();
+		public void Inserir(Aluno Aluno) {
 
-			var maxId = listaAlunos.Max(aluno => aluno.id);
-			Aluno.id = maxId + 1;
-			listaAlunos.Add(Aluno);
+			try
+			{
+				var alunoDB = new AlunoDAO();
+				alunoDB.InserirAunoBD(Aluno);
 
-			ReescreverArquivo(listaAlunos);
+			}
+			catch (Exception ex)
+			{
 
-			return Aluno;
+				throw new Exception($"error ao inserir aluno:error=>{ex.Message} ");
+			}
+
+
+			//var listaAlunos = this.ListarAluno();
+
+			//var maxId = listaAlunos.Max(aluno => aluno.id);
+			//Aluno.id = maxId + 1;
+			//listaAlunos.Add(Aluno);
+
+			//ReescreverArquivo(listaAlunos);
+
+			//return Aluno;
 		}
 		public Aluno Atualizar(int id, Aluno Aluno) {
 			var listaAlunos = this.ListarAluno();
