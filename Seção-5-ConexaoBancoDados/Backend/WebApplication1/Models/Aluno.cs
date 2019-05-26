@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -23,6 +25,15 @@ namespace WebApplication1.Models
 			var json = File.ReadAllText(caminhoArquivo);
 
 			var listAlunos = JsonConvert.DeserializeObject<List<Aluno>>(json);
+
+			return listAlunos;
+		}
+		public string stringConexao = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=~/App_Data/Database.mdf;Integrated Security = True";
+		public IDbConnection conexao;
+		public List<Aluno> ListarAlunosBD()
+		{
+			conexao = new SqlConnection(stringConexao);
+			var listAlunos = new List<Aluno>();
 
 			return listAlunos;
 		}
