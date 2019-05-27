@@ -85,5 +85,16 @@ namespace WebApplication1.Models
 
 			updateCMD.ExecuteNonQuery();
 		}
+		public void DeletarAlunoBD(int id)
+		{
+
+			IDbCommand deleteCMD = conexao.CreateCommand();
+			deleteCMD.CommandText = "Delete from Alunos where Id=@ID";
+
+			IDbDataParameter parmID = new SqlParameter("ID", id);
+			deleteCMD.Parameters.Add(parmID);
+
+			deleteCMD.ExecuteNonQuery();
+		}
 	}
 }

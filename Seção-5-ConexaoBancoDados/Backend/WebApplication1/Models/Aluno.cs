@@ -102,24 +102,36 @@ namespace WebApplication1.Models
 			//return Aluno;
 		}
 
-		public bool Deletar(int id)
+		public void Deletar(int id)
 		{
-			var listaAlunos = this.ListarAluno();
-			var itemIndex = listaAlunos.FindIndex(p => p.id == id);
-
-			if (itemIndex >= 0)
+			try
 			{
-				
-				listaAlunos.RemoveAt(itemIndex);
+				var alunoDB = new AlunoDAO();
+				alunoDB.DeletarAlunoBD(id);
+
 			}
-			else
+			catch (Exception ex)
 			{
-				return false;
+
+				throw new Exception($"error ao deletar aluno:error=>{ex.Message} ");
 			}
+			//var listaAlunos = this.ListarAluno();
+			//var itemIndex = listaAlunos.FindIndex(p => p.id == id);
 
-			ReescreverArquivo(listaAlunos);
+			//if (itemIndex >= 0)
+			//{
 
-			return true;
+			//	listaAlunos.RemoveAt(itemIndex);
+			//}
+			//else
+			//{
+			//	return false;
+			//}
+
+			//ReescreverArquivo(listaAlunos);
+
+			//return true;
+
 		}
 	}
 }
