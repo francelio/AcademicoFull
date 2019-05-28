@@ -20,7 +20,7 @@ namespace WebApplication1.Controllers
 		{
 			try
 			{
-				Aluno alunosIns = new Aluno();
+				AlunoModel alunosIns = new AlunoModel();
 				return Ok(alunosIns.ListarAluno());
 			}
 			catch (Exception ex)
@@ -33,11 +33,19 @@ namespace WebApplication1.Controllers
 		// GET: api/Aluno/5
 		[HttpGet]
 		[Route("Recuperar/{id:int}/{nome?}/{sobrenome?}")]
-		public Aluno Get(int id, string nome=null, string sobrenome=null)
+		public IHttpActionResult Get(int id, string nome=null, string sobrenome=null)
 		{
+			try
+			{
+				AlunoModel alunosIns = new AlunoModel();
+				return Ok(alunosIns.ListarAluno(id).FirstOrDefault());
+			}
+			catch (Exception ex)
+			{
+				return InternalServerError(ex);
+			}
 
-			Aluno alunosIns = new Aluno();
-			return alunosIns.ListarAluno(id).FirstOrDefault();
+			
 		}
 
 		[HttpGet]
@@ -46,8 +54,8 @@ namespace WebApplication1.Controllers
 		{
 			try
 			{
-				Aluno alunosIns = new Aluno();
-				IEnumerable<Aluno> alunos = alunosIns.ListarAluno().Where(x => x.data == data || x.nome == nome);
+				AlunoModel alunosIns = new AlunoModel();
+				IEnumerable<AlunoDTO> alunos = alunosIns.ListarAluno().Where(x => x.data == data || x.nome == nome);
 
 				if (!alunos.Any())
 					return NotFound();
@@ -64,11 +72,11 @@ namespace WebApplication1.Controllers
 
 		
 		[HttpPost]
-		public IHttpActionResult Post(Aluno aluno)
+		public IHttpActionResult Post(AlunoDTO aluno)
 		{
 			try
 			{
-				Aluno _alunosIns = new Aluno();
+				AlunoModel _alunosIns = new AlunoModel();
 				_alunosIns.Inserir(aluno);
 				return Ok(_alunosIns.ListarAluno(null));
 
@@ -82,11 +90,11 @@ namespace WebApplication1.Controllers
 		}
 
 		[HttpPut]
-		public IHttpActionResult Put(int id, [FromBody]Aluno aluno)
+		public IHttpActionResult Put(int id, [FromBody]AlunoDTO aluno)
 		{
 			try
 			{
-				Aluno _alunosIns = new Aluno();
+				AlunoModel _alunosIns = new AlunoModel();
 				aluno.id = id;
 				_alunosIns.Atualizar(aluno);
 				
@@ -107,7 +115,7 @@ namespace WebApplication1.Controllers
 		{
 			try
 			{
-				Aluno _alunosIns = new Aluno();
+				AlunoModel _alunosIns = new AlunoModel();
 				_alunosIns.Deletar(id);
 
 				return Ok("Deletado com sucesso");

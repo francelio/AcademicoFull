@@ -19,9 +19,9 @@ namespace WebApplication1.Models
 			conexao.Open();
 		}
 
-		public List<Aluno> ListarAlunosBD(int? id)
+		public List<AlunoDTO> ListarAlunosBD(int? id)
 		{
-			var listAlunos = new List<Aluno>();
+			var listAlunos = new List<AlunoDTO>();
 			try
 			{
 				IDbCommand selectCMD = conexao.CreateCommand();
@@ -40,7 +40,7 @@ namespace WebApplication1.Models
 
 				while (resultado.Read())
 				{
-					var alu = new Aluno
+					var alu = new AlunoDTO
 					{
 						id = Convert.ToInt32(resultado["Id"]),
 						nome = Convert.ToString(resultado["nome"]),
@@ -65,7 +65,7 @@ namespace WebApplication1.Models
 			
 		}
 
-		public void InserirAlunoBD(Aluno aluno)
+		public void InserirAlunoBD(AlunoDTO aluno)
 		{
 
 			try
@@ -97,7 +97,7 @@ namespace WebApplication1.Models
 			}
 
 		}
-		public void AtualizarAlunoBD(Aluno aluno)
+		public void AtualizarAlunoBD(AlunoDTO aluno)
 		{
 			try
 			{
