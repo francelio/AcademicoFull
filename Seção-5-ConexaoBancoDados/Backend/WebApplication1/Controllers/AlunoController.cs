@@ -62,29 +62,62 @@ namespace WebApplication1.Controllers
 			
 		}
 
-		// POST: api/Aluno
-		public List<Aluno> Post(Aluno aluno)
+		
+		[HttpPost]
+		public IHttpActionResult Post(Aluno aluno)
 		{
-			Aluno _alunosIns = new Aluno();
-			_alunosIns.Inserir(aluno);
-			return _alunosIns.ListarAluno(null);
+			try
+			{
+				Aluno _alunosIns = new Aluno();
+				_alunosIns.Inserir(aluno);
+				return Ok(_alunosIns.ListarAluno(null));
+
+			}
+			catch (Exception ex)
+			{
+				return InternalServerError(ex);
+			}
+
+		
 		}
 
-		// PUT: api/Aluno/5
-		public Aluno Put(int id, [FromBody]Aluno aluno)
+		[HttpPut]
+		public IHttpActionResult Put(int id, [FromBody]Aluno aluno)
 		{
-			Aluno _alunosIns = new Aluno();
-			aluno.id = id;
-			_alunosIns.Atualizar(aluno);
-			return _alunosIns.ListarAluno().FirstOrDefault(x=>x.id==id);
+			try
+			{
+				Aluno _alunosIns = new Aluno();
+				aluno.id = id;
+				_alunosIns.Atualizar(aluno);
+				
+				return Ok(_alunosIns.ListarAluno(id).FirstOrDefault());
+
+			}
+			catch (Exception ex)
+			{
+				return InternalServerError(ex);
+			}
+
+			
 
 		}
 
-		// DELETE: api/Aluno/5
-		public void Delete(int id)
+		[HttpDelete]
+		public IHttpActionResult Delete(int id)
 		{
-			Aluno _alunosIns = new Aluno();
-			_alunosIns.Deletar(id);
+			try
+			{
+				Aluno _alunosIns = new Aluno();
+				_alunosIns.Deletar(id);
+
+				return Ok("Deletado com sucesso");
+
+			}
+			catch (Exception ex)
+			{
+				return InternalServerError(ex);
+			}
+			
 		}
 	}
 }
