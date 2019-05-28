@@ -32,12 +32,12 @@ namespace WebApplication1.Controllers
 
 		// GET: api/Aluno/5
 		[HttpGet]
-		[Route("Recuperar/{id:int}/{nome}/{sobrenome=andrade}")]
-		public Aluno Get(int id, string nome, string sobrenome)
+		[Route("Recuperar/{id:int}/{nome?}/{sobrenome?}")]
+		public Aluno Get(int id, string nome=null, string sobrenome=null)
 		{
 
 			Aluno alunosIns = new Aluno();
-			return alunosIns.ListarAluno().Where(x => x.id == id).FirstOrDefault();
+			return alunosIns.ListarAluno(id).FirstOrDefault();
 		}
 
 		[HttpGet]
@@ -67,7 +67,7 @@ namespace WebApplication1.Controllers
 		{
 			Aluno _alunosIns = new Aluno();
 			_alunosIns.Inserir(aluno);
-			return _alunosIns.ListarAluno();
+			return _alunosIns.ListarAluno(null);
 		}
 
 		// PUT: api/Aluno/5
