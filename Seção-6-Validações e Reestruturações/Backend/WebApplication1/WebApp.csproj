@@ -111,7 +111,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AlunoModel.cs" />
-    <Compile Include="DTOS\AlunoDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -125,10 +124,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\App.Domain\App.Domain.csproj">
+      <Project>{3b55435b-9229-480d-8d2d-75580fcb9bcf}</Project>
+      <Name>App.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\App.Repository\App.Repository.csproj">
       <Project>{3a4f8d4f-dbd1-497c-a829-52ec2b7b3a01}</Project>
       <Name>App.Repository</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DTOS\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
