@@ -74,6 +74,8 @@ namespace WebApplication1.Controllers
 		[HttpPost]
 		public IHttpActionResult Post(AlunoDTO aluno)
 		{
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
 			try
 			{
 				AlunoModel _alunosIns = new AlunoModel();
