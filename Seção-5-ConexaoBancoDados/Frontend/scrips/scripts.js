@@ -6,10 +6,10 @@ function Cadastrar() {
     aluno.telefone = document.querySelector('#telefone').value;
     aluno.ra = document.querySelector('#ra').value;
 
-    if (aluno.id === undefined || aluno.id === 0) {
+    if (aluno.Id === undefined || aluno.Id === 0) {
         salvarEstudantes('POST', 0, aluno);
     } else {
-        salvarEstudantes('PUT', aluno.id, aluno);
+        salvarEstudantes('PUT', aluno.Id, aluno);
     }
 
     carregarEstudantes();
@@ -21,7 +21,7 @@ function carregarEstudantes() {
     var xhr = new XMLHttpRequest();
     console.log('UNSENT', xhr.readyState);
 
-    xhr.open(`GET`, `http://localhost:50886/api/aluno/`, true);
+    xhr.open(`GET`, `http://localhost:50886/api/aluno/Recuperar/`, true);
     console.log('OPENED', xhr.readyState);
 
     xhr.onprogress = function () {
@@ -72,10 +72,10 @@ carregarEstudantes();
 function adicionaLinha(estudante) {
 
     var trow = ` <tr>
-                                <td>${estudante.nome}</td>
-                                <td>${estudante.sobrenome}</td>
-                                <td>${estudante.telefone}</td>
-                                <td>${estudante.ra}</td>
+                                <td>${estudante.Nome}</td>
+                                <td>${estudante.Sobrenome}</td>
+                                <td>${estudante.Telefone}</td>
+                                <td>${estudante.Ra}</td>
                                     <td>
                                         <button class="btn btn-info"  data-toggle="modal" data-target="#exampleModal" onclick='editarEstudante(${JSON.stringify(estudante)})'> Editar</button>
                                         <button  class="btn btn-danger"  onclick='excluir(${JSON.stringify(estudante)})'> Deletar</button>
@@ -89,13 +89,13 @@ function editarEstudante(estudante) {
     var btnSalvar = document.querySelector('#btnSalvar');
     var tituloModal = document.querySelector('#tituloModal');
 
-    document.querySelector('#nome').value = estudante.nome;
-    document.querySelector('#sobrenome').value = estudante.sobrenome;
-    document.querySelector('#telefone').value = estudante.telefone;
-    document.querySelector('#ra').value = estudante.ra;
+    document.querySelector('#nome').value = estudante.Nome;
+    document.querySelector('#sobrenome').value = estudante.Sobrenome;
+    document.querySelector('#telefone').value = estudante.Telefone;
+    document.querySelector('#ra').value = estudante.Ra;
 
     btnSalvar.textContent = 'Salvar';
-    tituloModal.textContent = `Editar Aluno ${estudante.nome}`;
+    tituloModal.textContent = `Editar Aluno ${estudante.Nome}`;
     aluno = estudante;
     console.log(aluno);
 }
@@ -108,7 +108,7 @@ function deletarEstudante(id) {
 }
 function excluir(estudante) {
     bootbox.confirm({
-        message: `Tem certeza que deseja excluir excluir o estudante ${estudante.nome}`,
+        message: `Tem certeza que deseja excluir excluir o estudante ${estudante.Nome}`,
         buttons: {
             confirm: {
                 label: 'Sim',
@@ -121,7 +121,7 @@ function excluir(estudante) {
         },
         callback: function (result) {
             if (result) {
-                deletarEstudante(estudante.id);
+                deletarEstudante(estudante.Id);
                 carregarEstudantes();
             }
 

@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Hosting;
+using WebApp.DTO;
 
 namespace WebApplication1.Models
 {

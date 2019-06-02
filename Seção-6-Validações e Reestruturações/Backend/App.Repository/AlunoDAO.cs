@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace WebApplication1.Models
+namespace app.Repository
 {
 	public class AlunoDAO
 	{
