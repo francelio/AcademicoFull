@@ -42,11 +42,11 @@ namespace WebApplication1.Models
 				{
 					var alu = new AlunoDTO
 					{
-						id = Convert.ToInt32(resultado["Id"]),
-						nome = Convert.ToString(resultado["nome"]),
-						sobrenome = Convert.ToString(resultado["sobrenome"]),
-						telefone = Convert.ToString(resultado["telefone"]),
-						ra = Convert.ToInt32(resultado["ra"]),
+						Id = Convert.ToInt32(resultado["Id"]),
+						Nome = Convert.ToString(resultado["nome"]),
+						Sobrenome = Convert.ToString(resultado["sobrenome"]),
+						Telefone = Convert.ToString(resultado["telefone"]),
+						Ra = Convert.ToInt32(resultado["ra"]),
 					};
 					listAlunos.Add(alu);
 
@@ -73,16 +73,16 @@ namespace WebApplication1.Models
 				IDbCommand insertCMD = conexao.CreateCommand();
 				insertCMD.CommandText = "insert into Alunos (nome, sobrenome, telefone, ra) values (@nome,@sobrenome,@telefone,@ra) ";
 
-				IDbDataParameter parmNome = new SqlParameter("nome", aluno.nome);
+				IDbDataParameter parmNome = new SqlParameter("nome", aluno.Nome);
 				insertCMD.Parameters.Add(parmNome);
 
-				IDbDataParameter parmSobreNome = new SqlParameter("sobrenome", aluno.sobrenome);
+				IDbDataParameter parmSobreNome = new SqlParameter("sobrenome", aluno.Sobrenome);
 				insertCMD.Parameters.Add(parmSobreNome);
 
-				IDbDataParameter parmTelefone = new SqlParameter("telefone", aluno.telefone);
+				IDbDataParameter parmTelefone = new SqlParameter("telefone", aluno.Telefone);
 				insertCMD.Parameters.Add(parmTelefone);
 
-				IDbDataParameter parmRa = new SqlParameter("ra", aluno.ra);
+				IDbDataParameter parmRa = new SqlParameter("ra", aluno.Ra);
 				insertCMD.Parameters.Add(parmRa);
 
 				insertCMD.ExecuteNonQuery();
@@ -104,17 +104,17 @@ namespace WebApplication1.Models
 				IDbCommand updateCMD = conexao.CreateCommand();
 				updateCMD.CommandText = "update Alunos set nome = @nome, sobrenome = @sobrenome, telefone = @telefone, ra = @ra where Id=@ID";
 
-				IDbDataParameter parmNome = new SqlParameter("nome", aluno.nome);
-				IDbDataParameter parmSobreNome = new SqlParameter("sobrenome", aluno.sobrenome);
-				IDbDataParameter parmTelefone = new SqlParameter("telefone", aluno.telefone);
-				IDbDataParameter parmRa = new SqlParameter("ra", aluno.ra);
+				IDbDataParameter parmNome = new SqlParameter("nome", aluno.Nome);
+				IDbDataParameter parmSobreNome = new SqlParameter("sobrenome", aluno.Sobrenome);
+				IDbDataParameter parmTelefone = new SqlParameter("telefone", aluno.Telefone);
+				IDbDataParameter parmRa = new SqlParameter("ra", aluno.Ra);
 
 				updateCMD.Parameters.Add(parmNome);
 				updateCMD.Parameters.Add(parmSobreNome);
 				updateCMD.Parameters.Add(parmTelefone);
 				updateCMD.Parameters.Add(parmRa);
 
-				IDbDataParameter parmID = new SqlParameter("ID", aluno.id);
+				IDbDataParameter parmID = new SqlParameter("ID", aluno.Id);
 				updateCMD.Parameters.Add(parmID);
 
 				updateCMD.ExecuteNonQuery();

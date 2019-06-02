@@ -55,7 +55,7 @@ namespace WebApplication1.Controllers
 			try
 			{
 				AlunoModel alunosIns = new AlunoModel();
-				IEnumerable<AlunoDTO> alunos = alunosIns.ListarAluno().Where(x => x.data == data || x.nome == nome);
+				IEnumerable<AlunoDTO> alunos = alunosIns.ListarAluno().Where(x => x.Data == data || x.Nome == nome);
 
 				if (!alunos.Any())
 					return NotFound();
@@ -97,7 +97,7 @@ namespace WebApplication1.Controllers
 			try
 			{
 				AlunoModel _alunosIns = new AlunoModel();
-				aluno.id = id;
+				aluno.Id = id;
 				_alunosIns.Atualizar(aluno);
 				
 				return Ok(_alunosIns.ListarAluno(id).FirstOrDefault());
